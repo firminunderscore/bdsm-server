@@ -1,0 +1,15 @@
+{
+  "name": "srvmonitor-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "cpu-stat": "^2.0.1",
+    "nodemon": "^2.0.20",
+    "ws": "^8.11.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  }
+}
