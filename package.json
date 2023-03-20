@@ -1,12 +1,17 @@
 {
-  "name": "srvmonitor-server",
+  "name": "bdsm-server",
+  "productName": "BDSM Server",
+  "description": "Server monitoring system (server)",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
     "cpu-stat": "^2.0.1",
-    "nodemon": "^2.0.20",
-    "ws": "^8.11.0"
+    "nodemon": "^2.0.20"
+  },
+  "author": {
+    "name": "Firmin B",
+    "email": "stereogaming18@gmail.com"
   },
   "scripts": {
     "start": "node index.js",
