@@ -17,10 +17,18 @@ Copyright 2023 Firmin B.
 const http = require("http"),
   os = require("os"),
   cpuStat = require("cpu-stat");
+require("dotenv").config();
 
-const servername = "dev",
-  password = "password",
-  port = 3040;
+const servername = process.env.SERVER_NAME,
+  password = process.env.PASSWORD,
+  port = process.env.PORT ? process.env.PORT : 3040;
+
+if (!servername || !password) {
+  console.log(
+    "Please set SERVER_NAME and PASSWORD environment variables. See docs for more info."
+  );
+  process.exit(1);
+}
 
 const server = http.createServer((req, res) => {
   if (req.method === "POST" && req.headers.auth === password) {
