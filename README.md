@@ -3,7 +3,8 @@
 Can be used with the [Basic Data Server Monitor (Client)](http://github.com/firminsurgithub/bdsm-client) to monitor your server's CPU, RAM and Disk usage.
 
 ## Installation (Linux-systemD)
-Install and setup BDSM-Server by running that command: ```
+Install and setup BDSM-Server by running that command: 
+```
 curl 'https://raw.githubusercontent.com/firminsurgithub/bdsm-server/master/install-linux.sh' | sh
 ```
 
