@@ -19,6 +19,11 @@ const http = require("http"),
   cpuStat = require("cpu-stat");
 require("dotenv").config();
 
+console.clear();
+console.log(
+  "BDSM Server v" + require("./package.json").version + "\nStarting..."
+);
+
 const servername = process.env.SERVER_NAME,
   password = process.env.PASSWORD,
   port = process.env.PORT ? process.env.PORT : 3040;
@@ -35,6 +40,7 @@ const server = http.createServer((req, res) => {
     if (req.url === "/update") {
       cpuStat.usagePercent(function (err, cpupercent, seconds) {
         const responseJson = {
+          serverVersion: require("./package.json").version,
           serverId: servername,
           serverUptime: os.uptime(),
           serverHostname: os.hostname(),
@@ -44,7 +50,7 @@ const server = http.createServer((req, res) => {
           cpuList: os.cpus(),
           ramUsage:
             Math.round((os.totalmem() - os.freemem()) / 1024 / 1024 / 100) /
-              10 +
+            10 +
             "GB" +
             "/" +
             Math.round(os.totalmem() / 1024 / 1024 / 100) / 10 +

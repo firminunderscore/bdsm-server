@@ -8,14 +8,20 @@
   "dependencies": {
     "cpu-stat": "^2.0.1",
     "dotenv": "^16.0.3",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "pkg": "^5.8.1"
   },
   "author": {
     "name": "Firmin B",
     "email": "stereogaming18@gmail.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/firminsurgithub/bdsm-server"
+  },
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build": "pkg index.js -c package.json --out-path dist --compress GZip"
   }
 }
