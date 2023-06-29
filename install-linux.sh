@@ -6,7 +6,7 @@ CYAN='\033[0;36m'
 PURPLE='\e[0;35m'
 RESET='\e[0m'
 
-declare -a requirements=("git" "node" "npm" "awk")
+declare -a requirements=("git" "node" "npm")
 
 isInstalled() {
   $1 --version &> /dev/null
@@ -56,7 +56,7 @@ Type=simple
 Restart=always
 RestartSec=1
 WorkingDirectory=$(pwd)/bdsm-server
-ExecStart=$(whereis npm | awk 'BEGIN{FS=" "} {print $2}') start
+ExecStart=$(whereis npm | cut -d' ' -f2) start
 
 [Install]
 WantedBy=multi-user.target
