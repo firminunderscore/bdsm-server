@@ -2,13 +2,13 @@
 
 Can be used with the [Basic Data Server Monitor (Client)](http://github.com/firminsurgithub/bdsm-client) to monitor your server's CPU, RAM and Disk usage.
 
-## Installation (Linux-systemD)
+## Installation (Linux-systemD) <- Recommanded for most users
 Install and setup BDSM-Server by running that command: 
 ```
 curl 'https://raw.githubusercontent.com/firminsurgithub/bdsm-server/master/install-linux.sh' | sh
 ```
 
-## Configuration
+## Installation (nodejs) 
 
 Create .env file in root directory and add the following variables:
 
@@ -28,10 +28,14 @@ Then, run the following command:
 npm install
 
 # Start the server in a detached screen to keep it running even if you close the terminal
-screen -S bdsm-server
+screen -S bdsm-server # On linux
 
 # Start the server
 npm start
 ```
 
 (To exit the detached screen, press `Ctrl + A` and then `D`)
+
+## Special Thanks
+
+- [**@0x454d505459**](http://github.com/0x454d505459) - Contributor
