@@ -8,6 +8,13 @@ Install and setup BDSM-Server by running that command:
 curl 'https://raw.githubusercontent.com/firminsurgithub/bdsm-server/master/install-linux.sh' | sh
 ```
 
+If you want to uninstall BDSM-Server, run that command:
+```
+curl 'https://raw.githubusercontent.com/firminsurgithub/bdsm-server/master/uninstall-linux.sh' | sh
+```
+
+The preferences are stored in `/usr/share/bdsm-server/.env`
+
 ## Installation (nodejs) 
 
 Create .env file in root directory and add the following variables:
