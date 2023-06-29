@@ -1,67 +1,49 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-CYAN='\033[0;36m'
-PURPLE='\e[0;35m'
-RESET='\e[0m'
+if [ "$EUID" -ne 0 ]; then
+    echo "This script must be run as root. Please enter the root password to continue :"
+    sudo -k
+    sudo "$0" "$@"
+    exit $?
+fi
 
-declare -a requirements=("git" "node" "npm")
+echo "Download bdsm-server-linux from GitHub..."
+wget -O /tmp/bdsm-server-linux https://github.com/firminsurgithub/bdsm-server/releases/latest/download/bdsm-server-linux
 
-isInstalled() {
-  $1 --version &> /dev/null
-  if (($? != 0 ))
-  then 
-    echo -e"[${RED}FATAL${RESET}] $1 is not installed ! Please install it using your package manager first."
-    exit 1
-  fi
-}
+echo "Create /usr/share/bdsm-server directory..."
+mkdir -p /usr/share/bdsm-server
 
-isRoot() {
-  uid=$(id -u)
-  if (($uid == 0))
-  then
-    echo -e "[${RED}FATAL${RESET}] Running as root is not supported ! Please run as regular user, you will be prompted for root rights when needed"
-    exit 2
-  fi
-}
+echo "Move bdsm-server-linux file to /usr/share/bdsm-server..."
+mv /tmp/bdsm-server-linux /usr/share/bdsm-server/bdsm-server-linux
 
-isRoot
-for i in ${requirements[@]};do
-  isInstalled $i
-done
+echo "Please enter the following values :"
+read -p $'[\e[35mPROMPT\e[0m] Please enter a name for your server: ' SERVER_NAME
+read -p $'[\e[35mPROMPT\e[0m] Please enter the port the server will run on: ' PORT
+read -sp $'[\e[35mPROMPT\e[0m] Please enter a password to connect to the server: ' PASSWORD
 
-echo -e "[ ${GREEN}HINT${RESET} ] Installing in $(pwd)"
-git clone https://github.com/firminsurgithub/bdsm-server.git
-cd bdsm-server
-read -p $'[\e[35mPROMPT\e[0m] Please enter a name for your server: ' name
-read -p $'[\e[35mPROMPT\e[0m] Please enter the port the server will run on: ' port
-read -sp $'[\e[35mPROMPT\e[0m] Please enter a password to connect to the server: ' password
-echo ""
+echo "SERVER_NAME=$SERVER_NAME" > /usr/share/bdsm-server/.env
+echo "PORT=$PORT" >> /usr/share/bdsm-server/.env
+echo "PASSWORD=$PASSWORD" >> /usr/share/bdsm-server/.env
 
-echo """
-SERVER_NAME="${name}"
-PORT=${port}
-PASSWORD="${password}"
-""" > .env
-
-echo -e "[${GREEN}HINT${RESET}] Downloading packages"
-npm install
-echo -e "[${CYAN}SERVICE${RESET}] Writing systemD service"
-echo """
-[Unit]
+echo "Creation of the systemd bdsm-server service..."
+echo "[Unit]
 Description=BDSM Server unit service
 After=network.target
 Type=simple
 Restart=always
 RestartSec=1
-WorkingDirectory=$(pwd)/bdsm-server
-ExecStart=$(whereis npm | cut -d' ' -f2) start
+Description=bdsm-server
+
+[Service]
+ExecStart=/usr/share/bdsm-server/bdsm-server-linux
+WorkingDirectory=/usr/share/bdsm-server
 
 [Install]
-WantedBy=multi-user.target
-""" | sudo tee /etc/systemd/system/bdsm.service &> /dev/null
-echo -e "[${CYAN}SERVICE${RESET}] Enabling service"
+WantedBy=multi-user.target" > /etc/systemd/system/bdsm-server.service
 
-sudo systemctl enable --now bdsm
-echo -e "[${GREEN}HINT${RESET}] Installation done"
+chmod +x /usr/share/bdsm-server/bdsm-server-linux
+
+echo "Activate the bdsm-server service..."
+systemctl enable bdsm-server --now
+
+echo "The script has been successfully executed!"
