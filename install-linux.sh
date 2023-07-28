@@ -60,6 +60,4 @@ chmod +x /usr/share/bdsm-server/bdsm-server-linux
 echo "Activate the bdsm-server service..."
 systemctl enable bdsm-server --now
 
-rm /tmp/bdsm-server-linux
-
 echo "The script has been successfully executed!"
