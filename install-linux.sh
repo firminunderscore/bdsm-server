@@ -2,11 +2,11 @@
 
 declare -a requirements=("sudo" "systemd" "wget")
 
+echo "BDSM Server installation script for Linux"
+
 if [ "$EUID" -ne 0 ]; then
-    echo "This script must be run as root. Please enter the root password to continue :"
-    sudo -k
-    sudo "$0" "$@"
-    exit $?
+    echo "This script must be run as root."
+    exit 1
 fi
 
 isInstalled() {

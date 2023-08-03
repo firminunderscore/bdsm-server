@@ -5,12 +5,17 @@ Can be used with the [Basic Data Server Monitor (Client)](http://github.com/firm
 ## Installation (Linux-systemD) <- Recommanded for most users
 Install and setup BDSM-Server by running that command: 
 ```
-curl 'https://raw.githubusercontent.com/firminsurgithub/bdsm-server/master/install-linux.sh' | sh
+curl 'https://raw.githubusercontent.com/firminsurgithub/bdsm-server/master/install-linux.sh' | bash
+```
+
+To update BDSM-Server, run that command:
+```
+curl 'https://raw.githubusercontent.com/firminsurgithub/bdsm-server/master/update-linux.sh' | bash
 ```
 
 If you want to uninstall BDSM-Server, run that command:
 ```
-curl 'https://raw.githubusercontent.com/firminsurgithub/bdsm-server/master/uninstall-linux.sh' | sh
+curl 'https://raw.githubusercontent.com/firminsurgithub/bdsm-server/master/uninstall-linux.sh' | bash
 ```
 
 The preferences are stored in `/usr/share/bdsm-server/.env`

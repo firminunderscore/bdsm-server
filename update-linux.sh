@@ -1,8 +1,8 @@
 #!/bin/bash
 
-declare -a requirements=("sudo" "systemd")
+declare -a requirements=("sudo" "systemd" "wget")
 
-echo "BDSM Server remove script for Linux"
+echo "BDSM Server update script for Linux"
 
 if [ "$EUID" -ne 0 ]; then
     echo "This script must be run as root."
@@ -24,17 +24,20 @@ done
 
 echo "Checking if BDSM is installed on your system..."
 if [ ! -d "/usr/share/bdsm-server" && ! "/etc/systemd/system/bdsm-server.service" ]; then
-  echo -e "[${RED}FATAL${RESET}] BDSM is not installed on your system ! Can't uninstall it."
+  echo -e "[${RED}FATAL${RESET}] BDSM is not installed on your system ! Please install it using install-linux.sh first."
   exit 1
 fi
 
 echo "Disabling the bdsm-server service..."
 systemctl disable bdsm-server --now
 
-echo "Removing the bdsm-server service..."
-rm /etc/systemd/system/bdsm-server.service
+echo "Download bdsm-server-linux from GitHub..."
+wget -O /tmp/bdsm-server-linux
 
-echo "Removing the /usr/share/bdsm-server directory..."
-rm -rf /usr/share/bdsm-server
+echo "Move bdsm-server-linux file to /usr/share/bdsm-server..."
+mv /tmp/bdsm-server-linux /usr/share/bdsm-server/bdsm-server-linux
 
-echo "Uninstall complete !"
+echo "Activate the bdsm-server service..."
+systemctl enable bdsm-server --now
+
+echo "BDSM Server has been updated !"
