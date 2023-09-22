@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 declare -a requirements=("sudo" "systemd" "wget")
 
@@ -32,9 +32,9 @@ echo "Move bdsm-server-linux file to /usr/share/bdsm-server..."
 mv /tmp/bdsm-server-linux /usr/share/bdsm-server/bdsm-server-linux
 
 echo "Please enter the following values :"
-read -p $'[\e[35mPROMPT\e[0m] Please enter a name for your server: ' SERVER_NAME
-read -p $'[\e[35mPROMPT\e[0m] Please enter the port the server will run on: ' PORT
-read -sp $'[\e[35mPROMPT\e[0m] Please enter a password to connect to the server: ' PASSWORD
+read -u 1 -p $'[\e[35mPROMPT\e[0m] Please enter a name for your server: ' SERVER_NAME
+read -u 1 -p $'[\e[35mPROMPT\e[0m] Please enter the port the server will run on: ' PORT
+read -u 1 -sp $'[\e[35mPROMPT\e[0m] Please enter a password to connect to the server: ' PASSWORD
 
 echo "SERVER_NAME=$SERVER_NAME" > /usr/share/bdsm-server/.env
 echo "PORT=$PORT" >> /usr/share/bdsm-server/.env
